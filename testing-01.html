@@ -12,8 +12,6 @@ body {
   font-family: serif;
 }
 
-
-
 #examples {
   display: flex;
 }
@@ -35,6 +33,8 @@ body {
 .ok { color: #00f !important; }
 .ng { color: #f00 !important; }
 
+pre { overflow-x: auto; }
+
 
 
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 100; }
@@ -42,13 +42,15 @@ body {
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 300; }
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 400; }
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 500; }
-@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 600; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 600; }
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 700; }
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 800; }
 @font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 900; }
 .original-yu-gothic   { font-family: Yu Gothic, "Original Yu Gothic",                     serif; }
 .original-yu-gothic-m { font-family: Yu Gothic, "Original Yu Gothic", "Yu Gothic Medium", serif; }
 .original-yu-gothic-f { font-family: Yu Gothic, "Original Yu Gothic", "Yu Gothic"       , serif; }
+
+
 
 .n { font-weight: normal; display: inline-block; width: 500px; }
 .b { font-weight: bold  ; display: inline-block; }
@@ -226,11 +228,11 @@ function detectFontFamily(element) {
 </ul>
 
 <p><time>2020-01-17</time> 時点 (Chrome v79・Chromium Edge v79・Firefox v72・IE v11・Safari v13) では次のように適用されていた。</p>
-<p><a href="https://user-images.githubusercontent.com/16625731/72588835-e3bf2f80-393c-11ea-9650-e3e070a62b31.png"><img src="https://user-images.githubusercontent.com/16625731/72588835-e3bf2f80-393c-11ea-9650-e3e070a62b31.png" alt="2020-01-17 時点の OS・ブラウザ別表示結果" style="max-width: 100%;" width="781"></a></p>
+<p><a href="https://user-images.githubusercontent.com/16625731/72611935-b7240b80-396e-11ea-9f77-d77008f1c52c.png"><img src="https://user-images.githubusercontent.com/16625731/72611935-b7240b80-396e-11ea-9f77-d77008f1c52c.png" alt="2020-01-17 時点の OS・ブラウザ別表示結果" style="max-width: 100%;" width="781"></a></p>
 <ul>
   <li>一応 MacOS も確認したが、Mac には Regular フォントがないので、<code>font-family: YuGothic</code> を入れておけば十分</li>
   <li>Chrome・Edge・Firefox で <code>font-family: &quot;Yu Gothic Medium&quot;</code> 指定が有効になっていた (以前の Chrome では効かなくなっていた)</li>
-  <li><code>@font-face</code> で Windows 向けのウェイト付きで Full Name ないしは PostScript 名を指定すれば、ほぼどのブラウザでも認識することが分かった</li>
+  <li><code>@font-face</code> で Windows 向けのウェイト付きで Full Name ないしは PostScript 名を指定すれば、Windows の主要ブラウザはどれも正しく Medium と Bold を認識することが分かった</li>
 </ul>
 <p>以上のことから、綺麗な Yu Gothic Medium を指定するための最小構成が導けた。</p>
 <pre>@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;); }
@@ -240,29 +242,35 @@ body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
 <pre>@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); font-weight: bold; }
 body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
-<p><code>@font-face</code> におけるウェイト別の指定は、精緻にやってもやらなくても特に変わりなかった。ウェイト別に細かくやりたい場合は以下のように書けば良い。</p>
+<p><code>@font-face</code> におけるウェイト別の指定は、詳細にやってもやらなくても特に変わりなかった。ウェイト別に細かくやりたい場合は以下のように書けば良い。</p>
 <pre>@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 100; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 200; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 300; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 400; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 500; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
-@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 700; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 800; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 900; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
 <p>ココまでの例では <code>&quot;Yu Gothic&quot;</code> の定義を上書きしているが、フォントの適用順を変更したかったり、何らかの理由で Regular ウェイトが適用されてしまうくらいなら「メイリオ」に切り替えたい、といった理由であれば、オリジナルのフォント名を付けて運用する方が良いだろう。</p>
-<pre>@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 100; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+<pre>/* 簡素版 */
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;); font-weight: bold; }
+body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, Meiryo, sans-serif; }
+
+/* 詳細版 */
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 100; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 200; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 300; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 400; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 500; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
-@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 700; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 800; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 @font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 900; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
 body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, Meiryo, sans-serif; }</pre>
-<p>このように書けば、<code>@font-face</code> によるフォント指定が効かなかった場合はメイリオが適用されるようになる。</p>
+<p>上のいずれかのように書けば、<code>@font-face</code> によるフォント指定が効かなかった場合はメイリオが適用されるようになる。</p>
 
 <hr>
 

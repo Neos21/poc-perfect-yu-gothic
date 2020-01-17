@@ -7,7 +7,7 @@
     <title>Perfect Yu Gothic - Testing 02</title>
     <style>
 
-/* Perfect Medium : 精緻版 */
+/* Perfect Medium : 詳細版 */
 @font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 100; }
 @font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 200; }
 @font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 300; }
@@ -50,6 +50,7 @@
 
 
 body { font-size: 16px; font-family: serif; }
+pre { overflow-x: auto; }
 .wrapper { box-sizing: border-box; width: 100%; overflow: auto; }
 table { margin-bottom: 1.5rem; border-collapse: collapse; }
 th, td { border: 1px solid #ccc; padding: .2rem .5rem; white-space: nowrap; }
@@ -115,6 +116,24 @@ tbody th { text-align: left;   }
 </div>
 
 <hr>
+
+<p><time>2020-01-17</time> 時点 (Chrome v79・Chromium Edge v79・Firefox v72・IE v11) では、次のどちらのコードでも、同じ結果を得られることが分かった。<code>font-weight: 600</code> から <code>font-weight: bold</code> (700) 相当のフォントが適用されている。</p>
+<pre>/* Perfect Medium : 詳細版 */
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 100; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 200; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 300; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 400; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 500; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 600; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 700; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 800; }
+@font-face { font-family: &quot;Original Yu Gothic Detailed&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 900; }
+.original-yu-detailed { font-family: YuGothic, &quot;Original Yu Gothic Detailed&quot;, serif; }
+
+/* Perfect Medium : 簡素版 */
+@font-face { font-family: &quot;Original Yu Gothic Simplified&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic Simplified&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }
+.original-yu-simplified { font-family: YuGothic, &quot;Original Yu Gothic Simplified&quot;, serif; }</pre>
 
 <ul>
   <li>初版作成日 : <time>2020-01-17</time></li>

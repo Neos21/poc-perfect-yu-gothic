@@ -8,10 +8,83 @@
     <link rel="icon" href="/favicon.ico">
     <link rel="icon" href="/favicon-192x192.png" sizes="192x192" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon-152x152.png" sizes="152x152">
+    <style>
+
+/* ===== Fonts ===== */
+
+/* Perfect Yu Gothic */
+@font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); }
+@font-face { font-family: "Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: bold; }
+
+/* Sans Serif Font */
+body {
+  font-family: YuGothic, "Yu Gothic", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Monospace Font */
+pre, code, time {
+  font-family: MeiryoKe_Gothic, Osaka-mono, "MS Gothic", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* ===== Styles ===== */
+
+body {
+  margin: 0 1rem 2rem;
+  line-height: 1.7;
+}
+
+a {
+  color: #06f;
+}
+
+a:hover {
+  color: #09f;
+}
+
+dt {
+  font-weight: bold;
+}
+
+pre {
+  border: 1px solid #d2d4d6;
+  border-radius: 4px;
+  padding: 1em;
+  overflow-x: scroll;
+}
+
+code {
+  border: 1px solid #d2d4d6;
+  border-radius: 4px;
+  padding: .1rem .4rem;
+  font-size: .95em;
+  background: #f2f4f6;
+}
+
+strong {
+  color: #f00;
+}
+
+/* ===== Sections ===== */
+
+body > section {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+
+h2, h3 {
+  margin: 1.75em 0 1rem;
+}
+
+body > section > section > section {
+  border-left: 5px solid #d2d4d6;
+  padding-left: 1rem;
+}
+
+    </style>
   </head>
   <body>
 
-<section>
+<section id="perfect-yu-gothic">
   <h1>Perfect Yu Gothic</h1>
   <p>Windows 游ゴシックを綺麗に表示するための試験場。</p>
   <ul>
@@ -24,7 +97,7 @@
     <ul>
       <li><a href="#testing-pages">検証ページ</a></li>
       <li><a href="#problem">游ゴシックフォントに関する問題まとめ</a></li>
-      <li><a href="#best-answer">現状の最善案</a></li>
+      <li><strong><a href="#best-answer">現時点の最善の対策法 (<time>2020-01-17</time> 時点)</a></strong></li>
       <li><a href="#other-answers">副作用がある他の対策</a></li>
       <li><a href="#client-side">クライアントサイドでできる対策</a></li>
       <li><a href="#old-info">過去情報</a></li>
@@ -38,11 +111,11 @@
     <dl>
       <dt><a href="testing-01.html">Testing 01</a> (初版 <time>2020-01-17</time>・最終 <time>2020-01-17</time>)</dt>
       <dd>
-        <p>Full Name や PostScript 名を、<code>@font-face</code> で指定してみたり、<code>font-family</code> で直接指定してみたりした。</p>
+        <p>Full Name や PostScript 名を、<code>@font-face</code> で指定してみたり、<code>font-family</code> で直接指定してみたりした。<code>@font-face</code> 指定が上手く効くようになっていた。</p>
       </dd>
       <dt><a href="testing-02.html">Testing 02</a> (初版 <time>2020-01-17</time>・最終 <time>2020-01-17</time>)</dt>
       <dd>
-        <p><code>@font-face</code> 指定の詳細チェック。</p>
+        <p><code>@font-face</code> 指定の詳細チェック。「簡素版」でも「詳細版」でも同じ結果が得られることが確認できた。</p>
       </dd>
     </dl>
   </section>
@@ -70,16 +143,67 @@
   </section>
   
   <section id="best-answer">
-    <h2>現状の最善案</h2>
-    <p>まとめ中…</p>
-    <!-- ★ TODO ★ -->
+    <h2>現時点の最善の対策法 (<time>2020-01-17</time> 時点)</h2>
+    <p><strong><code>@font-face</code> の <code>local()</code> で Windows 向けの Full Name や PostScript 名を定義してやると、游ゴシック Medium が適用できる。</strong>適用の仕方にはいくつかのバリエーションがある。</p>
+    <ul>
+      <li>
+        <code>@font-face</code> で定義するフォント名 :
+        <ol>
+          <li>通常と同じ <code>&quot;Yu Gothic&quot;</code> を使用する → <code>font-family: &quot;Yu Gothic&quot;</code> と実装した箇所を上書きする形で Medium ウェイトを適用できる。Polyfill 的な挙動になるので、クライアントサイドでの対策ではこのやり方を取ると良いが、もし今後 <code>@font-face</code> 指定が無効になった場合に、Regular ウェイトが適用されてしまう恐れが出てくる。</li>
+          <li>オリジナルの <code>font-family</code> を定義する → 今後もし <code>@font-face</code> 指定が効かなくなった際に、Regular ウェイトがフォールバックで利用されないよう、CSS を調整しやすくなる。</li>
+        </ol>
+      </li>
+      <li>
+        <code>local()</code> に指定する名称 :
+        <ol>
+          <li>Windows 向け Full Name のみ記載する → 本稿執筆時点ではコレでも問題なし</li>
+          <li>Windows 向け PostScript 名のみ記載する → 本稿執筆時点ではコレでも問題なし・実装のバイト数としては「Full Name のみ記載」よりもわずかに小さく実装できるので、極力ファイルサイズをケチりたい場合用？</li>
+          <li>Windows 向け Full Name と Windows 向け PostScript 名を併記する → 本稿執筆時点で有効な指定を2つ備えるので一番確実</li>
+          <li>(MacOS 向け Full Name や PostScript 名も併記する) → MacOS は <code>font-family: YuGothic</code> 指定のみで問題なく、Windows では認識しない指定になるので、実装するだけ無駄</li>
+        </ol>
+      </li>
+      <li>
+        <code>font-weight</code> の指定方法 :
+        <ol>
+          <li>簡素版 : <code>font-weight</code> なし = Medium、<code>font-weight: bold</code> = Bold と、2つの <code>@font-face</code> で実装する → 実装量が少なく、「詳細版」と変わらない結果を得られる</li>
+          <li>詳細版 : <code>font-weight</code> 100 ～ 900 まで9段階の <code>@font-face</code> を実装する → 実装量が多いが、Bold に切り替わるウェイトを自分で調整できる他、精緻な設定で堅牢か</li>
+        </ol>
+      </li>
+    </ul>
+    <p>…文章だけで説明しても分かりにくいと思うので、以下にいくつかのバリエーションを提供する。<strong>以下のいずれのコードでも、本稿執筆時点では游ゴシック Medium が適用できる</strong>ので、お好みに応じてどのやり方を選んでもらっても良い。</p>
+    <ol>
+      <li>
+        通常の <code>&quot;Yu Gothic&quot;</code> を上書きする <code>@font-face</code> を定義する。ウェイト別の定義は2つのみの簡素な書き方 → もし今後 <code>@font-face</code> の内容が無視されるようになった場合、Regular ウェイトで表示されてしまう恐れがある
+        <pre>@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); font-weight: bold; }
+body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
+      </li>
+      <li>
+        オリジナルの <code>font-family</code> を定義する。ウェイト別の定義は2つのみの簡素版 → <code>@font-face</code> の内容が無視された場合は、その後ろの <code>Meiryo</code> (メイリオ) がフォールバックで適用されるように実装している
+        <pre>@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }
+body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, Meiryo, sans-serif; }</pre>
+      </li>
+      <li>
+        オリジナルの <code>font-family</code> を定義する。ウェイト別の定義は9段階に分けた詳細版 → 現状「2.」と同じ結果を得られるが、一番堅牢な実装といえる
+        <pre>@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 100; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 200; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 300; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 400; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); font-weight: 500; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 600; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 700; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 800; }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: 900; }
+body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre>
+    </ul>
   </section>
   
   <section id="other-answers">
     <h2>副作用がある他の対策</h2>
     
     <section>
-      <h3><code>font-family: &quot;Yu Gothic Medium&quot;</code> を指定する → 太字表示する際に「游ゴシック Bold」が使用されない</h3>
+      <h3>1. <code>font-family: &quot;Yu Gothic Medium&quot;</code> を指定する → 太字表示する際に「游ゴシック Bold」が使用されない</h3>
       <p><code>font-family: &quot;Yu Gothic Medium&quot;;</code></p>
       <p>と指定すると、Windows の次のブラウザ (本稿執筆時点での最新版) で、「游ゴシック Medium」が表示された。</p>
       <ul>
@@ -93,7 +217,7 @@
     </section>
     
     <section>
-      <h3><code>font-weight: 500</code> を指定する → 「ヒラギノ角ゴ」適用時に悪影響</h3>
+      <h3>2. <code>font-weight: 500</code> を指定する → 「ヒラギノ角ゴ」適用時に悪影響</h3>
       <p><code>font-family: &quot;Yu Gothic&quot;; font-weight: 500;</code></p>
       <p>と指定すると「游ゴシック Medium」が適用されるようになる。この挙動自体は本稿執筆時点の主要ブラウザでも再現する。</p>
       <p>大抵は <code>font-family</code> に他のフォントもフォールバックとして記載するが、その際「ヒラギノ角ゴ (Hiragino Kaku Gothic ProN)」が適用されると、通常の文字が太字で表示されてしまう、という悪影響がある。</p>
@@ -108,19 +232,26 @@
     <p>Web ページの閲覧者の PC でできる対策。</p>
     
     <section>
-      <h3>ユーザスタイルシートで <code>@font-face</code> を加工する</h3>
+      <h3>1. ユーザスタイルシートで <code>@font-face</code> を加工する</h3>
       <p><strong>Stylish</strong> などのブラウザ拡張機能を使用し、ユーザスタイルシートを追加する。</p>
-      <p><a href="#best-answer">現状の最善案</a>で紹介しているコードをベースに、<code>&quot;Yu Gothic&quot;, &quot;游ゴシック&quot;</code> などのフォント定義に対して <code>@font-face</code> を被せ、Medium ウェイトが適用されるようにする。</p>
-      <!-- ★ TODO ★ -->
+      <p>「<a href="#best-answer">現時点の最善の対策法</a>」で紹介しているコードをベースに、<code>&quot;Yu Gothic&quot;, &quot;游ゴシック&quot;</code> などのフォント定義に対して <code>@font-face</code> を被せ、Medium ウェイトが適用されるようにする。</p>
+      <pre>@font-face { font-family: &quot;Yu Gothic&quot;        ; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;);                    }
+@font-face { font-family: &quot;Yu Gothic&quot;        ; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }
+@font-face { font-family: &quot;Yu Gothic Medium&quot; ; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;);                    }
+@font-face { font-family: &quot;Yu Gothic Medium&quot; ; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }
+@font-face { font-family: &quot;游ゴシック&quot;       ; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;);                    }
+@font-face { font-family: &quot;游ゴシック&quot;       ; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }
+@font-face { font-family: &quot;游ゴシック Medium&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;);                    }
+@font-face { font-family: &quot;游ゴシック Medium&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }</pre>
       <ul>
         <li>参考 : <a href="http://neos21.hatenablog.com/entry/2018/01/15/080000">Corredor - Firefox の Stylish でできるオススメフォント設定</a> … この記事を書いた時点では、<code>@font-face</code> 指定が Chrome で効かず、Firefox のみのテクニックだったが、Chrome v79 ではこの指定が効くようになっていた。</li>
       </ul>
     </section>
     
     <section>
-      <h3>ユーザスタイルシートで <code>-webkit-text-stroke-width</code> を適用する</h3>
+      <h3>2. ユーザスタイルシートで <code>-webkit-text-stroke-width</code> を適用する</h3>
       <p><strong>Stylish</strong> などのブラウザ拡張機能を使用し、ユーザスタイルシートを追加する。</p>
-      <p><code>-webkit-text-stroke-width</code> プロパティを使用すると、テキストを太く見せられるようになる。游ゴシック以外のフォントにも適用されるため、相性の悪いフォントは滲んで見える場合があるが、「Medium ウェイトでも細く見える」のを解消するには唯一の策。</p>
+      <p><code>-webkit-text-stroke-width</code> プロパティを使用すると、テキストを太く見せられるようになる。游ゴシック以外のフォントにも適用されるため、相性の悪いフォントは滲んで見える場合があるが、「Medium ウェイトでも細く見える」のを解消するには唯一の策。「案 1.」と併用しても良い。</p>
       <p><code>* { -webkit-text-stroke-width: .4px !important; }</code></p>
       <p>対応しているのは Chrome、Chromium Edge、Firefox。</p>
       <p>IE はこのプロパティが効かないので、代わりに以下の <code>text-shadow</code> プロパティを使うと良い。ただし、色付きの文字が若干滲んで表示されてしまう。</p>
@@ -132,7 +263,7 @@
     </section>
     
     <section>
-      <h3>レジストリを書き換えて游ゴシック Regular・Light を Medium 化する</h3>
+      <h3>3. レジストリを書き換えて游ゴシック Regular・Light を Medium 化する</h3>
       <p>Windows は「フォント名」と「読み込むフォントファイル」の組み合わせを、レジストリで管理している。コレを書き換えることで、「游ゴシック Regular」や「游ゴシック Light」フォントが選択されても、Medium ウェイトのフォントファイルを読み込ませるようにする。</p>
       <ul>
         <li>参考 : <a href="http://neos21.hatenablog.com/entry/2019/01/05/000629#%E3%83%AC%E3%82%B8%E3%82%B9%E3%83%88%E3%83%AA%E3%82%92%E3%82%A4%E3%82%B8%E3%81%A3%E3%81%A6-RegularLight-%E3%82%A6%E3%82%A7%E3%82%A4%E3%83%88%E3%81%AE%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%92-Medium-%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%AB%E7%BD%AE%E6%8F%9B%E3%81%99%E3%82%8B">Corredor - レジストリをイジって Regular・Light ウェイトのフォントを Medium フォントに置換する</a> … 手作業での差し替え手順を紹介。</li>
@@ -141,7 +272,7 @@
     </section>
     
     <section>
-      <h3>(Firefox のみ) <code>about: config</code> で設定変更する</h3>
+      <h3>4. (Firefox のみ) <code>about: config</code> で設定変更する</h3>
       <p>Gecko ベースの Firefox では、<code>about: config</code> より各種設定を変更することで、フォントをより太く表示させられる。詳細は以下記事。</p>
       <ul>
         <li>参考 : <a href="http://neos21.hatenablog.com/entry/2018/02/13/080000">Corredor - Windows の Firefox でフォントが汚かったので直した</a></li>
@@ -172,7 +303,7 @@
   <section id="miscarry">
     <h2>「游ゴシック Medium」を諦める案</h2>
     <ol>
-      <li><code>font-family: &quot;Yu Gothic&quot;</code> を指定し、<strong>Regular ウェイトが使用されることを許容する</strong>。</li>
+      <li><code>font-family: &quot;Yu Gothic&quot;</code> を指定し、<strong>Regular ウェイトが使用されることを許容する。</strong></li>
       <li>游ゴシックの指定をなくし、<code>Meiryo</code> や他の Web フォントなどを使用する。</li>
     </ol>
   </section>
