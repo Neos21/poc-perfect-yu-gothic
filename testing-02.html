@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfect Yu Gothic - Testing 02</title>
+    <style>
+
+/* Perfect Medium : 精緻版 */
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 100; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 200; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 300; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 400; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 500; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 600; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 700; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 800; }
+@font-face { font-family: "Original Yu Gothic Detailed"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 900; }
+.original-yu-detailed { font-family: YuGothic, "Original Yu Gothic Detailed", serif; }
+
+/* Perfect Medium : 簡素版 */
+@font-face { font-family: "Original Yu Gothic Simplified"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); }
+@font-face { font-family: "Original Yu Gothic Simplified"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: bold; }
+.original-yu-simplified { font-family: YuGothic, "Original Yu Gothic Simplified", serif; }
+
+/* 比較用 : 指定のウェイトのみで描画させる */
+@font-face    { font-family: "Example Yu Gothic Light"  ; src: local("Yu Gothic Light"  ), local("YuGothic-Light"  ), local("YuGothic Light"  ), local("YuGo-Light"  );        }
+@font-face    { font-family: "Example Yu Gothic Regular"; src: local("Yu Gothic Regular"), local("YuGothic-Regular"), local("YuGothic Regular"), local("YuGo-Regular");        }
+@font-face    { font-family: "Example Yu Gothic Medium" ; src: local("Yu Gothic Medium" ), local("YuGothic-Medium" ), local("YuGothic Medium" ), local("YuGo-Medium" );        }
+@font-face    { font-family: "Example Yu Gothic Bold"   ; src: local("Yu Gothic Bold"   ), local("YuGothic-Bold"   ), local("YuGothic Bold"   ), local("YuGo-Bold"   );        }
+.example-yu-l { font-family: "Example Yu Gothic Light"  ,            "Yu Gothic Light"   ,       "YuGothic-Light"   ,       "YuGothic Light"   ,       "YuGo-Light"   , serif; }
+.example-yu-r { font-family: "Example Yu Gothic Regular",            "Yu Gothic Regular" ,       "YuGothic-Regular" ,       "YuGothic Regular" ,       "YuGo-Regular" , serif; }
+.example-yu-m { font-family: "Example Yu Gothic Medium" ,            "Yu Gothic Medium"  ,       "YuGothic-Medium"  ,       "YuGothic Medium"  ,       "YuGo-Medium"  , serif; }
+.example-yu-b { font-family: "Example Yu Gothic Bold"   ,            "Yu Gothic Bold"    ,       "YuGothic-Bold"    ,       "YuGothic Bold"    ,       "YuGo-Bold"    , serif; }
+
+/* ウェイト指定 */
+.weight-1 { font-weight: 100; }
+.weight-2 { font-weight: 200; }
+.weight-3 { font-weight: 300; }
+.weight-4 { font-weight: 400; }
+.weight-5 { font-weight: 500; }
+.weight-6 { font-weight: 600; }
+.weight-7 { font-weight: 700; }
+.weight-8 { font-weight: 800; }
+.weight-9 { font-weight: 900; }
+.normal   { font-weight: normal; }
+.bold     { font-weight: bold;   }
+
+
+
+body { font-size: 16px; font-family: serif; }
+.wrapper { box-sizing: border-box; width: 100%; overflow: auto; }
+table { margin-bottom: 1.5rem; border-collapse: collapse; }
+th, td { border: 1px solid #ccc; padding: .2rem .5rem; white-space: nowrap; }
+th { background: #f0f0f0; }
+thead th { text-align: center; }
+tbody th { text-align: left;   }
+
+    </style>
+  </head>
+  <body>
+
+<h1><a href="index.html">Perfect Yu Gothic</a> - Testing 02</h1>
+
+<p><a href="testing-01.html">Testing 01</a> で導いた <code>@font-face</code> 指定についての詳細チェック。</p>
+<ul>
+  <li><code>font-weight</code> を 100 ずつ指定した <strong>Original Yu Gothic Detailed</strong></p>
+  <li><code>font-weight</code> なしと <code>bold</code> 版のみ指定した <strong>Original Yu Gothic Simplified</strong></li>
+</ul>
+<p>両者に表示上の差がないかチェックする。</p>
+
+<div class="wrapper">
+
+<table>
+  <tbody>
+    <tr class=""                      ><th>Default                      </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="example-yu-l"          ><th>Yu Gothic Light              </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="example-yu-r"          ><th>Yu Gothic Regular            </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="example-yu-m"          ><th>Yu Gothic Medium             </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="original-yu-detailed"  ><th>Original Yu Gothic Detailed  </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="original-yu-simplified"><th>Original Yu Gothic Simplified</th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="example-yu-b"          ><th>Yu Gothic Bold               </th><td class="normal">游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+    <tr class="example-yu-b"          ><th>Yu Gothic Bold               </th><td class="bold"  >游ゴシック YuGothic</td><td class="bold">游ゴシック YuGothic</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th class=""                      >Default                      </th>
+      <th class="example-yu-l"          >Yu Gothic Light              </th>
+      <th class="example-yu-r"          >Yu Gothic Regular            </th>
+      <th class="example-yu-m"          >Yu Gothic Medium             </th>
+      <th class="original-yu-detailed"  >Original Yu Gothic Detailed  </th>
+      <th class="original-yu-simplified">Original Yu Gothic Simplified</th>
+      <th class="example-yu-b"          >Yu Gothic Bold               </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="weight-1"> <td class="">Weight 100</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-2"> <td class="">Weight 200</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-3"> <td class="">Weight 300</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-4"> <td class="">Weight 400</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-5"> <td class="">Weight 500</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-6"> <td class="">Weight 600</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-7"> <td class="">Weight 700</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-8"> <td class="">Weight 800</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+    <tr class="weight-9"> <td class="">Weight 900</td> <td class="example-yu-l">Yu Gothic Light</td> <td class="example-yu-r">Yu Gothic Regular</td> <td class="example-yu-m">Yu Gothic Medium</td> <td class="original-yu-detailed">Original Yu Gothic Detailed</td> <td class="original-yu-simplified">Original Yu Gothic Simplified</td> <td class="example-yu-b">Yu Gothic Bold</td> </tr>
+  </tbody>
+</table>
+
+</div>
+
+<hr>
+
+<ul>
+  <li>初版作成日 : <time>2020-01-17</time></li>
+  <li>最終更新日 : <time>2020-01-17</time></li>
+</ul>
+
+
+  </body>
+</html>

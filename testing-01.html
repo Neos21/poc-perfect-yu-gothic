@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfect Yu Gothic - Testing 01</title>
+    <style>
+
+body {
+  font-size: 16px;
+  font-family: serif;
+}
+
+
+
+#examples {
+  display: flex;
+}
+
+#examples > div > div {
+  height: 30px;
+}
+
+#font-faces {
+  margin-right: 40px;
+}
+
+#font-faces    > div > span,
+#font-families > div > span {
+  display: inline-block;
+  width: 180px;
+}
+
+.ok { color: #00f !important; }
+.ng { color: #f00 !important; }
+
+
+
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 100; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 200; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 300; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 400; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 500; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Medium"), local("YuGothic-Medium"); font-weight: 600; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 700; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 800; }
+@font-face { font-family: "Original Yu Gothic"; src: local("Yu Gothic Bold")  , local("YuGothic-Bold")  ; font-weight: 900; }
+.original-yu-gothic   { font-family: Yu Gothic, "Original Yu Gothic",                     serif; }
+.original-yu-gothic-m { font-family: Yu Gothic, "Original Yu Gothic", "Yu Gothic Medium", serif; }
+.original-yu-gothic-f { font-family: Yu Gothic, "Original Yu Gothic", "Yu Gothic"       , serif; }
+
+.n { font-weight: normal; display: inline-block; width: 500px; }
+.b { font-weight: bold  ; display: inline-block; }
+.n > span,
+.b > span {
+  display: inline-block;
+  width: 320px;
+}
+
+    </style>
+    <script>
+
+var fonts = [
+  /* 総称 */
+  { cls: 'win-full'         ,  family: 'Yu Gothic'         },  /* Win FullName   */
+  { cls: 'win-post-mac-full',  family: 'YuGothic'          },  /* Win PostScript・Mac FullName */
+  { cls: 'mac-post'         ,  family: 'YuGo'              },  /* Mac PostScript : 存在しなさそう */
+  /* Light : Mac にはないか */
+  { cls: 'win-full-l'       ,  family: 'Yu Gothic Light'   },  /* Win FullName   */
+  { cls: 'win-post-l'       ,  family: 'YuGothic-Light'    },  /* Win PostScript */
+  { cls: 'mac-full-l'       ,  family: 'YuGothic Light'    },  /* Mac FullName   */
+  { cls: 'mac-post-l'       ,  family: 'YuGo-Light'        },  /* Mac PostScript */
+  /* Regular : Mac にはないか */
+  { cls: 'win-full-r'       ,  family: 'Yu Gothic Regular' },  /* Win FullName   */
+  { cls: 'win-post-r'       ,  family: 'YuGothic-Regular'  },  /* Win PostScript */
+  { cls: 'mac-full-r'       ,  family: 'YuGothic Regular'  },  /* Mac FullName   */
+  { cls: 'mac-post-r'       ,  family: 'YuGo-Regular'      },  /* Mac PostScript */
+  /* Medium */
+  { cls: 'win-full-m'        , family: 'Yu Gothic Medium'  },  /* Win FullName   */
+  { cls: 'win-post-m'        , family: 'YuGothic-Medium'   },  /* Win PostScript */
+  { cls: 'mac-full-m'        , family: 'YuGothic Medium'   },  /* Mac FullName   */
+  { cls: 'mac-post-m'        , family: 'YuGo-Medium'       },  /* Mac PostScript */
+  /* Bold */
+  { cls: 'win-full-b'        , family: 'Yu Gothic Bold'    },  /* Win FullName   */
+  { cls: 'win-post-b'        , family: 'YuGothic-Bold'     },  /* Win PostScript */
+  { cls: 'mac-full-b'        , family: 'YuGothic Bold'     },  /* Mac FullName   */
+  { cls: 'mac-post-b'        , family: 'YuGo-Bold'         },  /* Mac PostScript */
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+  // @font-face を使用する要素を出力する : クラス名の先頭に 'n-'・フォントファミリの先頭に 'N-' を付与する
+  var fontFacesCss  = '<style id="font-faces-css">';
+  var fontFacesHtml = '<div id="font-faces">';
+  fonts.forEach(function(font) {
+    fontFacesCss  += '@font-face                     { font-family: "N-' + font.family + '"; src: local("' + font.family + '"); }'
+                  +             '.n-' + font.cls + ' { font-family: "N-' + font.family + '", serif; }';
+    fontFacesHtml += '<div class="n-' + font.cls + '">         <span>N-' + font.family + '</span> 游ゴシック YuGothic</div>';
+  });
+  fontFacesCss  += '</style>';
+  fontFacesHtml += '</div>';
+  document.querySelector('head'     ).insertAdjacentHTML('beforeend', fontFacesCss );
+  document.querySelector('#examples').insertAdjacentHTML('beforeend', fontFacesHtml);
+  
+  // 直接 font-family を指定する要素を出力する
+  var fontFamiliesCss  = '<style id="font-families-css">';
+  var fontFamiliesHtml = '<div id="font-families">';
+  fonts.forEach(function(font) {
+    fontFamiliesCss  +=            '.' + font.cls + ' { font-family: "' + font.family + '", serif; }';
+    fontFamiliesHtml += '<div class="' + font.cls + '">         <span>' + font.family + '</span> 游ゴシック YuGothic</div>';
+  });
+  fontFamiliesCss  += '</style>';
+  fontFamiliesHtml += '</div>';
+  document.querySelector('head'     ).insertAdjacentHTML('beforeend', fontFamiliesCss );
+  document.querySelector('#examples').insertAdjacentHTML('beforeend', fontFamiliesHtml);
+  
+  // 要素の適用状況を確認する
+  Array.prototype.forEach.call(document.querySelectorAll('#examples > div > div'), function(elem) {
+    var face = elem.querySelector('span').innerHTML;
+    var actualFamily = detectFontFamily(elem).replace((/"/g), '');
+    var isApplied = actualFamily === face;
+    console.log(face, actualFamily, isApplied);
+    elem.style.color = isApplied ? '#00f' : '#f00';
+  });
+  
+  // Windows Edge のみフォント適用状況の判定が上手くいかないので人力判定する
+  if(navigator.userAgent.indexOf('Windows') >= 0 && navigator.userAgent.indexOf('Edg/') >= 0) {
+    setTimeout(function() {
+      console.log('人力判定！');
+      var edgeNgClassNames = [
+        'n-win-full'  , 'n-win-post-mac-full'         , 'n-mac-post',
+        'n-mac-full-l', 'n-mac-post-l', 'n-mac-full-r', 'n-mac-post-r',
+        'n-mac-full-m', 'n-mac-post-m', 'n-mac-full-b', 'n-mac-post-b',
+        'win-post-mac-full', 'mac-post',
+        'win-post-l', 'mac-full-l', 'mac-post-l',               'win-post-r', 'mac-full-r', 'mac-post-r',
+        'win-post-m', 'mac-full-m', 'mac-post-m', 'win-full-b', 'win-post-b', 'mac-full-b', 'mac-post-b'
+      ];
+      edgeNgClassNames.forEach(function(className) {
+        document.querySelector('.' + className).style.color = '#f00';
+      });
+    }, 1000);
+  }
+});
+
+/**
+ * 指定の要素に実際に適用されているフォント名を特定する
+ * 
+ * https://stackoverflow.com/a/38910481
+ * 
+ * @param {*} element DOM 要素
+ * @return {string} フォント名
+ */
+function detectFontFamily(element) {
+  // スタイル未指定時のブラウザデフォルトフォント名を取得する
+  var detectDefaultFonts = function() {
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write('<html><body>');
+    var subElement = iframe.contentWindow.document.createElement(element.tagName);
+    iframe.contentWindow.document.body.appendChild(subElement);
+    var defaultFonts = getComputedStyle(subElement)['font-family'];
+    document.body.removeChild(iframe);
+    return defaultFonts;
+  };
+  
+  var fonts = getComputedStyle(element)['font-family'] + ',' + detectDefaultFonts();
+  var fontsArray = fonts.split(',');
+  var canvas = document.createElement('canvas');
+  var context = canvas.getContext('2d');
+  var testString = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()ñ';
+  var prevImageData;
+  document.body.appendChild(canvas);
+  canvas.width = 500;
+  canvas.height = 300;
+  fontsArray.unshift('"Font That Doesnt Exists ' + Math.random() + '"');
+  
+  for(var i = 0; i < fontsArray.length; i++) {
+    var fontName = fontsArray[i].trim();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.font = '16px ' + fontName + ', monospace';
+    context.fillText(testString, 10, 100);
+    var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    var data = imageData.data;
+    if(prevImageData) {
+      for(var j = 0; j < data.length; j += 3) {
+        if(prevImageData[j + 3] !== data[j + 3]) {
+          document.body.removeChild(canvas);
+          return fontName;
+        }
+      }
+    }
+    prevImageData = data;
+  }
+  
+  document.body.removeChild(canvas);
+  return 'monospace';
+}
+
+    </script>
+  </head>
+  <body>
+
+<h1><a href="index.html">Perfect Yu Gothic</a> - Testing 01</h1>
+
+<p>Full Name や PostScript 名を、<code>@font-face</code> で指定してみたり、<code>font-family</code> で直接指定してみたりした。指定したフォントが適用されていれば<b class="ok">青色</b>、されていなければ<b class="ng">赤色</b>に色付けしている (Windows Chromium Edge のみ、この判定スクリプトが誤作動しているので、目視判定した結果を後付けしている)。</p>
+
+<div id="examples"></div>
+
+<hr>
+
+<p><code>@font-face</code> 指定が上手くいきそうなので、まとめて指定し、ウェイトごとに定義してみた。</p>
+
+<div class=""                    > <div class="n"><span>Default                              </span> 游ゴシック YuGothic</div> <div class="b"><span>Default                              </span> 游ゴシック YuGothic</div> </div>
+<div class="original-yu-gothic"  > <div class="n"><span>Original Yu Gothic                   </span> 游ゴシック YuGothic</div> <div class="b"><span>Original Yu Gothic                   </span> 游ゴシック YuGothic</div> </div>
+<div class="original-yu-gothic-m"> <div class="n"><span>Original Yu Gothic + Yu Gothic Medium</span> 游ゴシック YuGothic</div> <div class="b"><span>Original Yu Gothic + Yu Gothic Medium</span> 游ゴシック YuGothic</div> </div>
+<div class="original-yu-gothic-f"> <div class="n"><span>Original Yu Gothic + Yu Gothic       </span> 游ゴシック YuGothic</div> <div class="b"><span>Original Yu Gothic + Yu Gothic       </span> 游ゴシック YuGothic</div> </div>
+
+<hr>
+
+<ul>
+  <li>「Yu Gothic Medium」とスペースを開ける → Windows 版の Full Name</li>
+  <li>「YuGothic-Medium」と、「『YuGothic』+『-』+『ウェイト』」表記 → Windows 版の PostScript 名</li>
+  <li>「YuGothic Medium」と、「『YuGothic』+『スペース』+『ウェイト』」表記 → MacOS 版の Full Name</li>
+  <li>「YuGo-Medium」と、「『YuGo』+『-』+『ウェイト』」表記 → MacOS 版の PostScript</li>
+</ul>
+
+<p><time>2020-01-17</time> 時点 (Chrome v79・Chromium Edge v79・Firefox v72・IE v11・Safari v13) では次のように適用されていた。</p>
+<p><a href="https://user-images.githubusercontent.com/16625731/72588835-e3bf2f80-393c-11ea-9650-e3e070a62b31.png"><img src="https://user-images.githubusercontent.com/16625731/72588835-e3bf2f80-393c-11ea-9650-e3e070a62b31.png" alt="2020-01-17 時点の OS・ブラウザ別表示結果" style="max-width: 100%;" width="781"></a></p>
+<ul>
+  <li>一応 MacOS も確認したが、Mac には Regular フォントがないので、<code>font-family: YuGothic</code> を入れておけば十分</li>
+  <li>Chrome・Edge・Firefox で <code>font-family: &quot;Yu Gothic Medium&quot;</code> 指定が有効になっていた (以前の Chrome では効かなくなっていた)</li>
+  <li><code>@font-face</code> で Windows 向けのウェイト付きで Full Name ないしは PostScript 名を指定すれば、ほぼどのブラウザでも認識することが分かった</li>
+</ul>
+<p>以上のことから、綺麗な Yu Gothic Medium を指定するための最小構成が導けた。</p>
+<pre>@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;); font-weight: bold; }
+body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
+<p>Windows Full Name のみ記載したが、Windows PostScript 名を併記しても良いだろう。</p>
+<pre>@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); font-weight: bold; }
+body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
+<p><code>@font-face</code> におけるウェイト別の指定は、精緻にやってもやらなくても特に変わりなかった。ウェイト別に細かくやりたい場合は以下のように書けば良い。</p>
+<pre>@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 100; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 200; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 300; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 400; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 500; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 700; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 800; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+@font-face { font-family: &quot;Yu Gothic&quot;; font-weight: 900; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+body { font-family: YuGothic, &quot;Yu Gothic&quot;, sans-serif; }</pre>
+<p>ココまでの例では <code>&quot;Yu Gothic&quot;</code> の定義を上書きしているが、フォントの適用順を変更したかったり、何らかの理由で Regular ウェイトが適用されてしまうくらいなら「メイリオ」に切り替えたい、といった理由であれば、オリジナルのフォント名を付けて運用する方が良いだろう。</p>
+<pre>@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 100; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 200; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 300; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 400; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 500; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 600; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 700; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 800; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+@font-face { font-family: &quot;Original Yu Gothic&quot;; font-weight: 900; src: local(&quot;Yu Gothic Bold&quot;), local(&quot;YuGothic-Bold&quot;); }
+body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, Meiryo, sans-serif; }</pre>
+<p>このように書けば、<code>@font-face</code> によるフォント指定が効かなかった場合はメイリオが適用されるようになる。</p>
+
+<hr>
+
+<ul>
+  <li>初版作成日 : <time>2020-01-17</time></li>
+  <li>最終更新日 : <time>2020-01-17</time></li>
+</ul>
+
+  </body>
+</html>
