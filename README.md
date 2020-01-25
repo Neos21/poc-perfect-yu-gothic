@@ -7,7 +7,7 @@ __[Go To GitHub Pages](https://neos21.github.io/perfect-yu-gothic/)__
 
 ## Author
 
-[Neo](http://neo.s21.xrea.com/) ([@Neos21](https://twitter.com/Neos21))
+[Neo](http://neo.s21.xrea.com/)
 
 - [GitHub - perfect-yu-gothic](https://github.com/Neos21/perfect-yu-gothic)
 - [GitHub Pages - Perfect Yu Gothic](https://neos21.github.io/perfect-yu-gothic/)
