@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="ls7kuvIKSqVa_dcixqKvFwl393swvYMkHCkG-xtlCj0">
+    <title>Perfect Yu Gothic - Testing 05</title>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP3ZQV2R3M"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-LP3ZQV2R3M');gtag('config','UA-106501-6');</script>
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-6475907504235292" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <style>
+
+/* ページ全体には游ゴシックを指定しているサンプル */
+body {
+  font-family: YuGothic, "游ゴシック体", "Yu Gothic", "游ゴシック", sans-serif;
+}
+
+/* 等幅フォント指定があるサンプル */
+code, kbd, samp, var, pre, textarea {
+  font-family: MeiryoKe_Gothic, "Ricty Diminished", Osaka-mono, "MS Gothic", "Courier New", monospace;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+    </style>
+    <script>
+
+/**
+ * Windows・Chrome で游ゴシックを指定している場合に
+ * -webkit-text-stroke-width を指定してフォントを少し太くする
+ * 
+ * OS・ブラウザ・body 要素に指定しているフォントが条件に合致しなかった場合は何もしない
+ */
+ function bolderYuGothicOnWindowsChrome() {
+  const ua = navigator.userAgent;
+  const fontName = detectFontName(document.body);
+  
+  const isWindows  = ua.match(/Windows/);
+  const isChrome   = ua.match(/Chrome/) && !ua.match(/Edge/);
+  const isYuGothic = fontName.match(/YuGothic/) || fontName.match(/Yu Gothic/) || fontName.match(/游ゴシック/);
+  
+  if(isWindows && isChrome && isYuGothic) {
+    const bolderStyle = `
+      <style id="bolder-style">
+        /* 太字化する */
+        body {
+          -webkit-text-stroke-width: .4px;
+        }
+        
+        /* 等幅フォントなど游ゴシックでない要素には指定しない (この辺の調整はお好みで…) */
+        code, kbd, samp, var, pre, textarea {
+          -webkit-text-stroke-width: 0;
+        }
+      </style>
+    `;
+    // head 要素の末尾に style 要素を追加する
+    document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', bolderStyle);
+  }
+}
+
+/**
+ * 指定の要素に実際に適用されているフォント名を特定する
+ * 
+ * https://stackoverflow.com/a/38910481
+ * 
+ * @param {*} element DOM 要素
+ * @return {string} フォント名
+ */
+function detectFontName(element) {
+  // スタイル未指定時のブラウザデフォルトフォント名を取得する
+  const detectDefaultFonts = () => {
+    const iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write('<html><body>');
+    const subElement = iframe.contentWindow.document.createElement(element.tagName);
+    iframe.contentWindow.document.body.appendChild(subElement);
+    const defaultFonts = getComputedStyle(subElement)['font-family'];
+    document.body.removeChild(iframe);
+    return defaultFonts;
+  };
+  
+  const fonts = getComputedStyle(element)['font-family'] + ',' + detectDefaultFonts();
+  const fontsArray = fonts.split(',');
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext("2d");
+  const testString = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()ñ";
+  let prevImageData;
+  document.body.appendChild(canvas);
+  canvas.width = 500;
+  canvas.height = 300;
+  fontsArray.unshift('"Font That Doesnt Exists ' + Math.random() + '"');
+  
+  for(let i = 0; i < fontsArray.length; i++) {
+    const fontName = fontsArray[i].trim();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.font = '16px ' + fontName + ', monospace';
+    context.fillText(testString, 10, 100);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    if(prevImageData) {
+      for(let j = 0; j < data.length; j += 3) {
+        if(prevImageData[j + 3] !== data[j + 3]) {
+          document.body.removeChild(canvas);
+          return fontName;
+        }
+      }
+    }
+    prevImageData = data;
+  }
+  
+  document.body.removeChild(canvas);
+  return 'monospace';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 環境情報表示用
+  detectEnvironments();
+  
+  // トグルボタンの処理
+  let isEnable = false;
+  const toggleButton = document.getElementById('toggle');
+  toggleButton.addEventListener('click', () => {
+    if(!isEnable) {
+      // Windows・Chrome で游ゴシックを指定していれば太く見せる
+      bolderYuGothicOnWindowsChrome();
+      toggleButton.innerHTML = '無効にする';
+    }
+    else {
+      // サンプル用に無効にするための処理
+      if(document.getElementById('bolder-style')) {
+        document.getElementsByTagName('head')[0].removeChild(document.getElementById('bolder-style'));
+      }
+      toggleButton.innerHTML = '有効にする';
+    }
+    isEnable = !isEnable;
+  });
+});
+
+/**
+ * このサンプル用・トグルボタンでフォントが太くなる環境かどうかを判定して表示する
+ */
+function detectEnvironments() {
+  const ua = navigator.userAgent;
+  const fontName = detectFontName(document.body);
+  
+  const isWindows  = ua.match(/Windows/);
+  const isChrome   = ua.match(/Chrome/) && !ua.match(/Edge/);
+  const isYuGothic = fontName.match(/YuGothic/) || fontName.match(/Yu Gothic/) || fontName.match(/游ゴシック/);
+  
+  const controller = document.getElementById('controller');
+  
+  if(isWindows && isChrome && isYuGothic) {
+    controller.insertAdjacentHTML('beforeend', '(Windows・Chrome・游ゴシック指定ページ。トグルボタンで効果が確認できます)');
+  }
+  else {
+    controller.insertAdjacentHTML('beforeend', `(Windows で${isWindows ? 'あり' : 'はなく'}、Chrome で${isChrome ? 'あり' : 'はなく'}、游ゴシック指定${isYuGothic ? 'である' : 'ではない (' + fontName + ') '}ようです。トグルボタンを押下しても効果は確認できません)`);
+  }
+}
+
+/**
+ * 指定の要素に実際に適用されているフォント名を特定する
+ * 
+ * https://stackoverflow.com/a/38910481
+ * 
+ * @param {*} element DOM 要素
+ * @return {string} フォント名
+ */
+function detectFontName(element) {
+  // スタイル未指定時のブラウザデフォルトフォント名を取得する
+  const detectDefaultFonts = () => {
+    const iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write('<html><body>');
+    const subElement = iframe.contentWindow.document.createElement(element.tagName);
+    iframe.contentWindow.document.body.appendChild(subElement);
+    const defaultFonts = getComputedStyle(subElement)['font-family'];
+    document.body.removeChild(iframe);
+    return defaultFonts;
+  };
+  
+  const fonts = getComputedStyle(element)['font-family'] + ',' + detectDefaultFonts();
+  const fontsArray = fonts.split(',');
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext("2d");
+  const testString = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()ñ";
+  let prevImageData;
+  document.body.appendChild(canvas);
+  canvas.width = 500;
+  canvas.height = 300;
+  fontsArray.unshift('"Font That Doesnt Exists ' + Math.random() + '"');
+  
+  for(let i = 0; i < fontsArray.length; i++) {
+    const fontName = fontsArray[i].trim();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.font = '16px ' + fontName + ', monospace';
+    context.fillText(testString, 10, 100);
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    if(prevImageData) {
+      for(let j = 0; j < data.length; j += 3) {
+        if(prevImageData[j + 3] !== data[j + 3]) {
+          document.body.removeChild(canvas);
+          return fontName;
+        }
+      }
+    }
+    prevImageData = data;
+  }
+  
+  document.body.removeChild(canvas);
+  return 'monospace';
+}
+
+    </script>
+  </head>
+  <body>
+
+<h1><a href="index.html">PoC : Perfect Yu Gothic</a> - Testing 06</h1>
+
+<h1>Windows・Chrome ブラウザで游ゴシックを指定している場合のみ <code>-webkit-text-stroke-width</code> を指定してフォントを少し太くするサンプル</h1>
+
+<p id="controller">
+  <button type="button" id="toggle">有効にする</button>
+</p>
+
+<p><strong>Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum (ロレム・イプサム、略してリプサム <em>lipsum</em> ともいう) とは、出版、Web デザインなどの諸分野において使用されているテキスト。</p>
+<pre><strong>Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem ipsum (ロレム・イプサム、略してリプサム <em>lipsum</em> ともいう) とは、出版、Web デザインなどの諸分野において使用されているテキスト。</pre>
+
+<ul>
+  <li>初版作成日 : <time>2019-01-27</time></li>
+  <li>最終更新日 : <time>2019-01-27</time></li>
+</ul>
+
+  </body>
+</html>

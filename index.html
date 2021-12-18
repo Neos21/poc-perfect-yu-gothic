@@ -85,16 +85,36 @@ body > section > section > section {
   padding-left: 1rem;
 }
 
+/* ===== Bolder ===== */
+
+.webkit-text-stroke-width {
+  -webkit-text-stroke-width: .4px;
+}
+
     </style>
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('toggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('webkit-text-stroke-width');
+    toggle.innerText = document.body.classList.contains('webkit-text-stroke-width') ? 'このページのウェイトを元に戻す' : 'このページのウェイトをもっと太くする';
+  });
+});
+
+    </script>
   </head>
   <body>
 
 <section id="perfect-yu-gothic">
   <h1>PoC : Perfect Yu Gothic</h1>
-  <p>Windows 游ゴシックを綺麗に表示するための試験場。</p>
+  <p>
+    Windows 游ゴシックを綺麗に表示するための試験場。
+    <button type="button" id="toggle">このページのウェイトをもっと太くする</button>
+  </p>
   <ul>
     <li>初版作成日 : <time>2020-01-17</time></li>
-    <li>最終更新日 : <time>2020-01-17</time></li>
+    <li>最終更新日 : <time>2021-12-18</time></li>
   </ul>
   
   <section id="table-of-contents">
@@ -121,6 +141,22 @@ body > section > section > section {
       <dt><a href="testing-02.html">Testing 02</a> (初版 <time>2020-01-17</time>・最終 <time>2020-01-17</time>)</dt>
       <dd>
         <p><code>@font-face</code> 指定の詳細チェック。「簡素版」でも「詳細版」でも同じ結果が得られることが確認できた。</p>
+      </dd>
+      <dt><a href="testing-03.html">Testing 03</a> (初版 <time>2018-11-16</time>・最終 <time>2018-11-16</time>)</dt>
+      <dd>
+        <p>Testing 01 と似たチェック。</p>
+      </dd>
+      <dt><a href="testing-04.html">Testing 04</a> (初版 <time>2019-01-03</time>・最終 <time>2019-01-03</time>)</dt>
+      <dd>
+        <p>様々な指定方法での見え方の違いを並べた。</p>
+      </dd>
+      <dt><a href="testing-05.html">Testing 05</a> (初版 <time>2019-01-27</time>・最終 <time>2019-01-27</time>)</dt>
+      <dd>
+        <p><code>text-shadow</code> や <code>-webkit-text-stroke-width</code> を使って文字を太めにする対処法のサンプル。</p>
+      </dd>
+      <dt><a href="testing-06.html">Testing 06</a> (初版 <time>2019-01-27</time>・最終 <time>2019-01-27</time>)</dt>
+      <dd>
+        <p>Windows OS・Chrome ブラウザ・游ゴシックフォントを指定しているページでのみ <code>-webkit-text-stroke-width</code> を使って文字を太めにする JS を組んでみたサンプル。</p>
       </dd>
     </dl>
   </section>
@@ -227,7 +263,7 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
       <p>と指定すると「游ゴシック Medium」が適用されるようになる。この挙動自体は本稿執筆時点の主要ブラウザでも再現する。</p>
       <p>大抵は <code>font-family</code> に他のフォントもフォールバックとして記載するが、その際「ヒラギノ角ゴ (Hiragino Kaku Gothic ProN)」が適用されると、通常の文字が太字で表示されてしまう、という悪影響がある。</p>
       <ul>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2016/02/12/081447">Corredor - Windows で游ゴシックが細く見えないようにする CSS</a></li>
+        <li>参考 : <a href="https://neos21.net/blog/2016/02/12-01.html">Neo's World - Windows で游ゴシックが細く見えないようにする CSS</a></li>
       </ul>
     </section>
   </section>
@@ -249,7 +285,7 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
 @font-face { font-family: &quot;游ゴシック Medium&quot;; src: local(&quot;Yu Gothic Medium&quot;), local(&quot;YuGothic-Medium&quot;);                    }
 @font-face { font-family: &quot;游ゴシック Medium&quot;; src: local(&quot;Yu Gothic Bold&quot;)  , local(&quot;YuGothic-Bold&quot;)  ; font-weight: bold; }</pre>
       <ul>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2018/01/15/080000">Corredor - Firefox の Stylish でできるオススメフォント設定</a> … この記事を書いた時点では、<code>@font-face</code> 指定が Chrome で効かず、Firefox のみのテクニックだったが、Chrome v79 ではこの指定が効くようになっていた。</li>
+        <li>参考 : <a href="https://neos21.net/blog/2018/01/15-03.html">Neo's World - Firefox の Stylish でできるオススメフォント設定</a> … この記事を書いた時点では、<code>@font-face</code> 指定が Chrome で効かず、Firefox のみのテクニックだったが、Chrome v79 ではこの指定が効くようになっていた。</li>
       </ul>
     </section>
     
@@ -262,8 +298,8 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
       <p>IE はこのプロパティが効かないので、代わりに以下の <code>text-shadow</code> プロパティを使うと良い。ただし、色付きの文字が若干滲んで表示されてしまう。</p>
       <p><code>* { text-shadow: transparent 0 0 0, rgba(0, 0, 0, 0.68) 0 0 0 !important; }</code></p>
       <ul>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2019/01/05/000629#Chrome-%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%81%A7--webkit-text-stroke-width-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">Corredor - Chrome 拡張機能で -webkit-text-stroke-width を指定する</a></li>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2019/01/27/220527#text-shadow-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F--webkit-text-stroke-width-%E3%82%92%E4%BD%BF%E3%81%86">Corredor - text-shadow ではなく -webkit-text-stroke-width を使う</a></li>
+        <li>参考 : <a href="https://neos21.net/blog/2019/01/05-02.html#chrome-%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%81%A7--webkit-text-stroke-width-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">Neo's World - Chrome 拡張機能で -webkit-text-stroke-width を指定する</a></li>
+        <li>参考 : <a href="https://neos21.net/blog/2019/01/27-01.html#text-shadow-%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F--webkit-text-stroke-width-%E3%82%92%E4%BD%BF%E3%81%86">Neo's World - text-shadow ではなく -webkit-text-stroke-width を使う</a></li>
       </ul>
     </section>
     
@@ -271,8 +307,8 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
       <h3>3. レジストリを書き換えて游ゴシック Regular・Light を Medium 化する</h3>
       <p>Windows は「フォント名」と「読み込むフォントファイル」の組み合わせを、レジストリで管理している。コレを書き換えることで、「游ゴシック Regular」や「游ゴシック Light」フォントが選択されても、Medium ウェイトのフォントファイルを読み込ませるようにする。</p>
       <ul>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2019/01/05/000629#%E3%83%AC%E3%82%B8%E3%82%B9%E3%83%88%E3%83%AA%E3%82%92%E3%82%A4%E3%82%B8%E3%81%A3%E3%81%A6-RegularLight-%E3%82%A6%E3%82%A7%E3%82%A4%E3%83%88%E3%81%AE%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%92-Medium-%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%AB%E7%BD%AE%E6%8F%9B%E3%81%99%E3%82%8B">Corredor - レジストリをイジって Regular・Light ウェイトのフォントを Medium フォントに置換する</a> … 手作業での差し替え手順を紹介。</li>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2019/02/24/080000">Corredor - Windows の游ゴシック Regular・Light を Medium フォントに差し替えて太く見せる VBScript</a> … VBScript でフォントの差し替えを自動化した。</li>
+        <li>参考 : <a href="https://neos21.net/blog/2019/01/05-02.html#%E3%83%AC%E3%82%B8%E3%82%B9%E3%83%88%E3%83%AA%E3%82%92%E3%82%A4%E3%82%B8%E3%81%A3%E3%81%A6-regularlight-%E3%82%A6%E3%82%A7%E3%82%A4%E3%83%88%E3%81%AE%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%92-medium-%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%AB%E7%BD%AE%E6%8F%9B%E3%81%99%E3%82%8B">Neo's World - レジストリをイジって Regular・Light ウェイトのフォントを Medium フォントに置換する</a> … 手作業での差し替え手順を紹介。</li>
+        <li>参考 : <a href="https://neos21.net/blog/2019/02/24-01.html">Neo's World - Windows の游ゴシック Regular・Light を Medium フォントに差し替えて太く見せる VBScript</a> … VBScript でフォントの差し替えを自動化した。</li>
       </ul>
     </section>
     
@@ -280,7 +316,7 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
       <h3>4. (Firefox のみ) <code>about: config</code> で設定変更する</h3>
       <p>Gecko ベースの Firefox では、<code>about: config</code> より各種設定を変更することで、フォントをより太く表示させられる。詳細は以下記事。</p>
       <ul>
-        <li>参考 : <a href="https://neos21.hatenablog.com/entry/2018/02/13/080000">Corredor - Windows の Firefox でフォントが汚かったので直した</a></li>
+        <li>参考 : <a href="https://neos21.net/blog/2018/02/13-01.html">Neo's World - Windows の Firefox でフォントが汚かったので直した</a></li>
       </ul>
     </section>
   </section>
@@ -293,14 +329,14 @@ body { font-family: YuGothic, &quot;Original Yu Gothic&quot;, sans-serif; }</pre
       <li>以前の Chrome では <code>@font-face</code> 指定が効かなくなっていた → 本稿執筆時点の最新版である Chrome v79 では動作するように戻っていた。</li>
     </ol>
     <ul>
-      <li>参考 : <a href="https://neos21.hatenablog.com/entry/2017/11/12/080000">Corredor - 2018年以降はコレで決まり！Web サイトで指定するゴシック体・明朝体・等幅の font-family 設定</a> … 2017-11-12 時点の検証結果もろもろ。</li>
-      <li>参考 : <a href="https://neos21.hatenablog.com/entry/2019/01/05/000629">Corredor - ウェブサイトに適用する游ゴシックフォントを見直しまくった最終解</a> … 2019-01-15 時点の検証結果もろもろ。</li>
+      <li>参考 : <a href="https://neos21.net/blog/2017/11/12-01.html">Neo's World - 2018年以降はコレで決まり！Web サイトで指定するゴシック体・明朝体・等幅の font-family 設定</a> … 2017-11-12 時点の検証結果もろもろ。</li>
+      <li>参考 : <a href="https://neos21.net/blog/2019/01/05-02.html">Neo's World - ウェブサイトに適用する游ゴシックフォントを見直しまくった最終解</a> … 2019-01-15 時点の検証結果もろもろ。</li>
     </ul>
     
     <section>
       <h3>過去にクライアントサイドでできた対策</h3>
       <ol>
-        <li>「<a href="https://neos21.hatenablog.com/entry/2018/02/14/080000">MacType</a>」というフリーソフトでフォントにアンチエイリアスをかけられた → 本稿執筆時点の主要ブラウザ (Chrome・Chromium Edge・Firefox・IE) ではページのテキストに MacType が適用されなくなっている。</li>
+        <li>「<a href="https://neos21.net/blog/2018/02/14-01.html">MacType</a>」というフリーソフトでフォントにアンチエイリアスをかけられた → 本稿執筆時点の主要ブラウザ (Chrome・Chromium Edge・Firefox・IE) ではページのテキストに MacType が適用されなくなっている。</li>
       </ol>
     </section>
   </section>

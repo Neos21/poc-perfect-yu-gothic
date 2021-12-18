@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="ls7kuvIKSqVa_dcixqKvFwl393swvYMkHCkG-xtlCj0">
+    <title>Perfect Yu Gothic - Testing 03</title>
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP3ZQV2R3M"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-LP3ZQV2R3M');gtag('config','UA-106501-6');</script>
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-6475907504235292" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <style>
+
+@font-face { font-family: "Yu Gothic M1"; src: local("Yu Gothic Medium"); }
+@font-face { font-family: "Yu Gothic M1"; src: local("Yu Gothic Bold"); font-weight: bold; }
+
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Medium"); font-weight: 100; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Medium"); font-weight: 200; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Medium"); font-weight: 300; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Medium"); font-weight: 400; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Medium"); font-weight: 500; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Bold"); font-weight: 600; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Bold"); font-weight: 700; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Bold"); font-weight: 800; }
+@font-face { font-family: "Yu Gothic M2"; src: local("Yu Gothic Bold"); font-weight: 900; }
+
+.y1 { font-family: "Yu Gothic M1", "ＭＳ Ｐ明朝", "MS PMincho", serif; }
+.y2 { font-family: "Yu Gothic M2", "ＭＳ Ｐ明朝", "MS PMincho", serif; }
+
+.wrapper { position: relative; font-size: 1.7rem; }
+.wrapper.side-by-side { display: grid; grid-template-columns: 1fr 1fr; }
+.wrapper:not(.side-by-side) > div { position: absolute; }
+
+.colour-blue { color: rgba(0, 0, 255, .9); }
+.colour-red  { color: rgba(255, 0, 0, .9); }
+
+ul { font-size: .8rem; }
+
+    </style>
+    <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('toggle-btn').addEventListener('click', () => {
+    document.querySelector('.wrapper').classList.toggle('side-by-side');
+  });
+  document.getElementById('colour-btn').addEventListener('click', () => {
+    document.querySelector('.y1-wrapper').classList.toggle('colour-blue');
+    document.querySelector('.y2-wrapper').classList.toggle('colour-red');
+  });
+});
+
+    </script>
+  </head>
+  <body>
+
+<h1><a href="index.html">PoC : Perfect Yu Gothic</a> - Testing 03</h1>
+
+<ul>
+  <li><code>@font-face</code> 使用時、どのぐらい <code>font-weight</code> 指定が必要か調べるために作った。</li>
+  <li><code>Yu Gothic M1</code> は <code>font-weight</code> なしと <code>bold</code> のみ記述。</li>
+  <li><code>Yu Gothic M2</code> は 100 ずつウェイトを指定して9つ記述。</li>
+  <li>Windows Firefox・Mac Chrome だとどちらも同じ見た目になった。</li>
+</ul>
+
+<ul>
+  <li>初版作成日 : <time>2018-11-16</time></li>
+  <li>最終更新日 : <time>2018-11-16</time></li>
+</ul>
+
+<p>
+  <button type="button" id="toggle-btn">重ねる</button>
+  <button type="button" id="colour-btn">色分け</button>
+</p>
+
+<div class="wrapper">
+  <div class="y1-wrapper">
+    <div class="y1" style="font-weight: 100;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 200;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 300;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 400;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 500;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 600;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 700;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 800;">游ゴシック Yu Gothic</div>
+    <div class="y1" style="font-weight: 900;">游ゴシック Yu Gothic</div>
+  </div>
+  <div class="y2-wrapper">
+    <div class="y2" style="font-weight: 100;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 200;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 300;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 400;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 500;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 600;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 700;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 800;">游ゴシック Yu Gothic</div>
+    <div class="y2" style="font-weight: 900;">游ゴシック Yu Gothic</div>
+  </div>
+</div>
+
+  </body>
+</html>
